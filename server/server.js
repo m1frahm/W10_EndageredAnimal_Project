@@ -33,6 +33,10 @@ app.get('/api/animals', cors(), async (req, res) => {
   }
 });
 
+
+//API call for set species
+
+
 // create the POST request // allow me to add in a new one 
 app.post('/api/animals', cors(), async (req, res) => {
   console.log("working");
@@ -49,7 +53,7 @@ app.post('/api/animals', cors(), async (req, res) => {
   res.json(result.rows[0]);
 });
 
-//A put request - Update a student 
+//A put request - Update an animal
 app.put('/api/animals/:animalId', cors(), async (req, res) =>{
   console.log(req.params);
   //This will be the id that I want to find in the DB - the animal to be updated

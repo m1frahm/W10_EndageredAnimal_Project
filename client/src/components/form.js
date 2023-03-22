@@ -1,15 +1,26 @@
 import { useState } from "react";
 
 const Form = (props) => {
+  const { initialAnimal = { id: null, nickname: "", r_c_timestamp: "" } } =
+    props;
 
-  const {initialAnimal = {id: null, 
-                          nickname: "", 
-                        r_c_timestamp: ""}} = props;
-
-
-  // This is the oroginal State with not initial student 
+     // This is the oroginal State with not initial student 
   const [animal, setAnimal] = useState(initialAnimal);
 
+    // This is the oroginal State with not initial student
+  const [species, setSpecies] = useState(initialSpecies);
+
+  //modify setAniamls to be setSpecies
+  useEffect(() => {
+    fetch("http://localhost:8080/api/species") //changing url
+      .then((response) => response.json())
+      .then((data) => {
+        setAnimals(animals);
+        console.log("Animals fetched...", data); //console.log just for checking
+      });
+  }, []);
+
+  
   //create functions that handle the event of the user typing into the form
   const handleNickNameChange = (event) => {
     const nickname = event.target.value;
@@ -37,32 +48,34 @@ const Form = (props) => {
       });
   };
 
-    //A function to handle the Update request
-    const updateAnimal = (existingAnimal) =>{
-      return fetch(`http://localhost:8080/api/animals/${existingAnimal.id}`, {
-          method: 'PUT',
-          headers: {'Content-Type': 'application/json'}, 
-          body: JSON.stringify(existingAnimal)
-        }).then((response) => {
-            return response.json()
-        }).then((data) => {
-          console.log("From put request ", data);
-          props.saveAnimal(data);
+  //A function to handle the Update request
+  const updateAnimal = (existingAnimal) => {
+    return fetch(`http://localhost:8080/api/animals/${existingAnimal.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(existingAnimal),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("From put request ", data);
+        props.saveAnimal(data);
       });
-
-  }
-
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(animal.id){
+    if (animal.id) {
       updateAnimal(animal);
-    } else{
+    } else {
       postAnimal(animal);
     }
-    
   };
 
+
+  //have a drop down in here for species 
+  
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
@@ -85,7 +98,7 @@ const Form = (props) => {
           onChange={handleRCTimestampChange}
         />
       </fieldset>
-      <button type="submit">{!animal.id ? "ADD": "SAVE"}</button>
+      <button type="submit">{!animal.id ? "ADD" : "SAVE"}</button>
     </form>
   );
 };

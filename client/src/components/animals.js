@@ -12,11 +12,13 @@ function Animals() {
   useEffect(() => {
     fetch("http://localhost:8080/api/animals")
       .then((response) => response.json())
-      .then((animals) => {
-            setAnimals(animals);
-            console.log("Animals fetched...", animals); //console.log just for checking
+      .then((animalsdata) => {
+            setAnimals(animalsdata);
+            console.log("Animals fetched...", animalsdata); //try not to console.log after the state you are setting, you might get null 
           });
   }, []);
+
+
 
   const addAnimal = (newAnimal) => {
     //console.log(newAnimal);
@@ -63,9 +65,9 @@ function Animals() {
             return <Form initialAnimal={animal} saveAnimal={updateAnimal}/>
           } else{
             return (
-              <li key={animal.id}>
-          {animal.name} {animal.nickname} {animal.livingage} {animal.sighting_date} {animal.location} <button key={animal.r_c_timestamp} type="button" onClick={() =>{onEdit(animal)}}>EDIT</button>
-        </li>
+              <table key={animal.id}>
+          {animal.name} {animal.livingage} {animal.nickname} {animal.location} {animal.sighting_date}  <button key={animal.r_c_timestamp} type="button" onClick={() =>{onEdit(animal)}}>EDIT</button>
+        </table>
             )
           }
         })}
