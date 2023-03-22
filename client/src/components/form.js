@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Form = (props) => {
   const { initialAnimal = { id: null, nickname: "", r_c_timestamp: "" } } =
