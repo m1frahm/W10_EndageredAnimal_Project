@@ -10,13 +10,13 @@ const Form = (props) => {
     // This is the oroginal State with not initial student
   const [species, setSpecies] = useState(initialSpecies);
 
-  //modify setAniamls to be setSpecies
+  //Step1 modify setAniamls to be setSpecies
   useEffect(() => {
     fetch("http://localhost:8080/api/species") //changing url
       .then((response) => response.json())
-      .then((data) => {
-        setAnimals(animals);
-        console.log("Animals fetched...", data); //console.log just for checking
+      .then((speciesdata) => {
+        setSpecies(speciesdata);
+        console.log("Species fetched...", speciesdata); //console.log just for checking
       });
   }, []);
 
@@ -74,8 +74,8 @@ const Form = (props) => {
   };
 
 
-  //have a drop down in here for species 
-  
+  //S3 have a drop down in here for species 
+
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
