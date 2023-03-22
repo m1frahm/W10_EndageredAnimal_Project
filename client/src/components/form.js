@@ -3,22 +3,22 @@ import { useState } from "react";
 const Form = (props) => {
 
   const {initialAnimal = {id: null, 
-                          firstname: "", 
-                        lastname: ""}} = props;
+                          nickname: "", 
+                        r_c_timestamp: ""}} = props;
 
 
   // This is the oroginal State with not initial student 
   const [animal, setAnimal] = useState(initialAnimal);
 
   //create functions that handle the event of the user typing into the form
-  const handleNameChange = (event) => {
-    const firstname = event.target.value;
-    setAnimal((animal) => ({ ...animal, firstname }));
+  const handleNickNameChange = (event) => {
+    const nickname = event.target.value;
+    setAnimal((animal) => ({ ...animal, nickname }));
   };
 
-  const handleLastnameChange = (event) => {
-    const lastname = event.target.value;
-    setAnimal((animal) => ({ ...animal, lastname }));
+  const handleRCTimestampChange = (event) => {
+    const r_c_timestamp = event.target.value;
+    setAnimal((animal) => ({ ...animal, r_c_timestamp }));
   };
 
   //A function to handle the post request
@@ -66,23 +66,23 @@ const Form = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
-        <label>First Name</label>
+        <label>Animal Nickname</label>
         <input
           type="text"
-          id="add-user-name"
-          placeholder="First Name"
+          id="add-animal-nickname"
+          placeholder="Animal Nickname"
           required
-          value={animal.firstname}
-          onChange={handleNameChange}
+          value={animal.nickname}
+          onChange={handleNickNameChange}
         />
-        <label>Last Name</label>
+        <label>R_C_Timestamp</label>
         <input
-          type="text"
-          id="add-user-lastname"
-          placeholder="Last Name"
+          type="date"
+          id="add-record-timestamp"
+          placeholder="Timestamp"
           required
-          value={animal.lastname}
-          onChange={handleLastnameChange}
+          value={animal.r_c_timestamp}
+          onChange={handleRCTimestampChange}
         />
       </fieldset>
       <button type="submit">{!animal.id ? "ADD": "SAVE"}</button>

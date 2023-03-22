@@ -35,14 +35,15 @@ app.get('/api/animals', cors(), async (req, res) => {
 
 // create the POST request
 app.post('/api/animals', cors(), async (req, res) => {
-  const newUser = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
+  console.log("working");
+  const newAnimal = {
+    nickname: req.body.nickname,
+    r_c_timestamp: req.body.r_c_timestamp
   };
-  console.log([newUser.firstname, newUser.lastname]);
+  console.log([newAnimal.nickname, newAnimal.r_c_timestamp]);
   const result = await db.query(
-    'INSERT INTO students(firstname, lastname) VALUES($1, $2) RETURNING *',
-    [newUser.firstname, newUser.lastname],
+    'INSERT INTO animals(nickname, r_c_timestamp) VALUES($1, $2) RETURNING *',
+    [newAnimal.nickname, newAnimal.r_c_timestamp],
   );
   console.log(result.rows[0]);
   res.json(result.rows[0]);
@@ -51,7 +52,7 @@ app.post('/api/animals', cors(), async (req, res) => {
 //A put request - Update a student 
 app.put('/api/animals/:animalId', cors(), async (req, res) =>{
   console.log(req.params);
-  //This will be the id that I want to find in the DB - the student to be updated
+  //This will be the id that I want to find in the DB - the animal to be updated
   const animalId = req.params.animalId
   const updatedAnimal = { id: req.body.id, firstname: req.body.firstname, lastname: req.body.lastname}
   console.log("In the server from the url - the animal id", animalId);

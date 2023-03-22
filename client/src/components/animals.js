@@ -12,7 +12,7 @@ function Animals() {
   useEffect(() => {
     fetch("http://localhost:8080/api/animals")
       .then((response) => response.json())
-      .then((students) => {
+      .then((animals) => {
             setAnimals(animals);
           });
   }, []);
@@ -46,7 +46,7 @@ function Animals() {
   const onEdit = (animal) =>{
     console.log("This is line 26 on animal component", animal);
     const editingID = animal.id;
-    console.log("Just the student id", animal.id)
+    console.log("Just the animal id", animal.id)
     setEditAnimalId(editingID);
 
   }
@@ -63,7 +63,7 @@ function Animals() {
           } else{
             return (
               <li key={animal.id}>
-           {animal.firstname} {animal.lastname} <button type="button" onClick={() =>{onEdit(animal)}}>EDIT</button>
+           {animal.nickname} <button key={animal.r_c_timestamp} type="button" onClick={() =>{onEdit(animal)}}>EDIT</button>
         </li>
             )
           }
