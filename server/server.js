@@ -26,15 +26,15 @@ app.get('/api/animals', cors(), async (req, res) => {
   // ];
   // res.json(STUDENTS);
   try {
-    const { rows: students } = await db.query('SELECT * FROM students');
-    res.send(students);
+    const { rows: animals } = await db.query('SELECT * FROM animals');
+    res.send(animals);
   } catch (e) {
     return res.status(400).json({ e });
   }
 });
 
 // create the POST request
-app.post('/api/students', cors(), async (req, res) => {
+app.post('/api/animals', cors(), async (req, res) => {
   const newUser = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -49,16 +49,16 @@ app.post('/api/students', cors(), async (req, res) => {
 });
 
 //A put request - Update a student 
-app.put('/api/students/:studentId', cors(), async (req, res) =>{
+app.put('/api/animals/:animalId', cors(), async (req, res) =>{
   console.log(req.params);
   //This will be the id that I want to find in the DB - the student to be updated
-  const studentId = req.params.studentId
-  const updatedStudent = { id: req.body.id, firstname: req.body.firstname, lastname: req.body.lastname}
-  console.log("In the server from the url - the student id", studentId);
-  console.log("In the server, from the react - the student to be edited", updatedStudent);
+  const animalId = req.params.animalId
+  const updatedAnimal = { id: req.body.id, firstname: req.body.firstname, lastname: req.body.lastname}
+  console.log("In the server from the url - the animal id", animalId);
+  console.log("In the server, from the react - the animal to be edited", updatedAnimal);
   // UPDATE students SET lastname = "something" WHERE id="16";
-  const query = `UPDATE students SET lastname=$1, firstname=$2 WHERE id=${studentId} RETURNING *`;
-  const values = [updatedStudent.lastname, updatedStudent.firstname];
+  const query = `UPDATE animals SET lastname=$1, firstname=$2 WHERE id=${animalId} RETURNING *`;
+  const values = [updatedAnimal.lastname, updatedAnimal.firstname];
   try {
     const updated = await db.query(query, values);
     console.log(updated.rows[0]);
@@ -74,5 +74,5 @@ app.put('/api/students/:studentId', cors(), async (req, res) =>{
 
 // console.log that your server is up and running
 app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+  console.log(`Back-end Server listening on ${PORT}`);
 });
