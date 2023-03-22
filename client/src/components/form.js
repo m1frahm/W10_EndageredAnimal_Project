@@ -2,52 +2,52 @@ import { useState } from "react";
 
 const Form = (props) => {
 
-  const {initialStudent = {id: null, 
+  const {initialAnimal = {id: null, 
                           firstname: "", 
                         lastname: ""}} = props;
 
 
   // This is the oroginal State with not initial student 
-  const [student, setStudent] = useState(initialStudent);
+  const [animal, setAnimal] = useState(initialAnimal);
 
   //create functions that handle the event of the user typing into the form
   const handleNameChange = (event) => {
     const firstname = event.target.value;
-    setStudent((student) => ({ ...student, firstname }));
+    setAnimal((animal) => ({ ...animal, firstname }));
   };
 
   const handleLastnameChange = (event) => {
     const lastname = event.target.value;
-    setStudent((student) => ({ ...student, lastname }));
+    setAnimal((animal) => ({ ...animal, lastname }));
   };
 
   //A function to handle the post request
-  const postStudent = (newStudent) => {
-    return fetch("http://localhost:8080/api/students", {
+  const postAnimal = (newAnimal) => {
+    return fetch("http://localhost:8080/api/animals", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newStudent),
+      body: JSON.stringify(newAnimal),
     })
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         console.log("From the post ", data);
-        props.saveStudent(data);
+        props.saveAnimal(data);
       });
   };
 
     //A function to handle the Update request
-    const updateStudent = (existingStudent) =>{
-      return fetch(`http://localhost:8080/api/students/${existingStudent.id}`, {
+    const updateAnimal = (existingAnimal) =>{
+      return fetch(`http://localhost:8080/api/animals/${existingAnimal.id}`, {
           method: 'PUT',
           headers: {'Content-Type': 'application/json'}, 
-          body: JSON.stringify(existingStudent)
+          body: JSON.stringify(existingAnimal)
         }).then((response) => {
             return response.json()
         }).then((data) => {
           console.log("From put request ", data);
-          props.saveStudent(data);
+          props.saveAnimal(data);
       });
 
   }
@@ -55,10 +55,10 @@ const Form = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(student.id){
-      updateStudent(student);
+    if(animal.id){
+      updateAnimal(animal);
     } else{
-      postStudent(student);
+      postAnimal(animal);
     }
     
   };
@@ -72,7 +72,7 @@ const Form = (props) => {
           id="add-user-name"
           placeholder="First Name"
           required
-          value={student.firstname}
+          value={animal.firstname}
           onChange={handleNameChange}
         />
         <label>Last Name</label>
@@ -81,11 +81,11 @@ const Form = (props) => {
           id="add-user-lastname"
           placeholder="Last Name"
           required
-          value={student.lastname}
+          value={animal.lastname}
           onChange={handleLastnameChange}
         />
       </fieldset>
-      <button type="submit">{!student.id ? "ADD": "SAVE"}</button>
+      <button type="submit">{!animal.id ? "ADD": "SAVE"}</button>
     </form>
   );
 };
