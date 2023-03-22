@@ -103,6 +103,9 @@ const Form = (props) => {
         />
       </fieldset>
       <button type="submit">{!animal.id ? "ADD" : "SAVE"}</button>
+      <select onChange={handleSpeciesChange}>
+        <option value="Select a Species"></option>
+      </select>
     </form>
   );
 };
