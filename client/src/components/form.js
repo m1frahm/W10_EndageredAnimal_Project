@@ -8,7 +8,7 @@ const Form = (props) => {
   const [animal, setAnimal] = useState(initialAnimal);
 
     // This is the oroginal State with not initial student
-  const [species, setSpecies] = useState(initialSpecies);
+  const [species, setSpecies] = useState([]);
 
   //Step1 modify setAniamls to be setSpecies
   useEffect(() => {
@@ -20,7 +20,11 @@ const Form = (props) => {
       });
   }, []);
 
-  
+  //function to update the species
+  const handleSpeciesChange = (event) => {
+    setSpecies(event.target.value);
+  }
+
   //create functions that handle the event of the user typing into the form
   const handleNickNameChange = (event) => {
     const nickname = event.target.value;
