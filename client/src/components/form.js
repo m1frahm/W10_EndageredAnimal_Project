@@ -103,8 +103,10 @@ const Form = (props) => {
         />
       </fieldset>
       <button type="submit">{!animal.id ? "ADD" : "SAVE"}</button>
+
       <select onChange={handleSpeciesChange}>
         <option value="Select a Species"></option>
+        {species.map((specie) => <option value={species.value}>{species.label}</option>)}
       </select>
     </form>
   );
