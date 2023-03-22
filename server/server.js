@@ -26,14 +26,14 @@ app.get('/api/animals', cors(), async (req, res) => {
   // ];
   // res.json(STUDENTS);
   try {
-    const { rows: animals } = await db.query('SELECT * FROM animals');
+    const { rows: animals } = await db.query('SELECT animals.id, species.name, animals.nickname, species.livingage, sightings.sighting_date, sightings.location FROM animals INNER JOIN species on animals.species_id = species.id INNER JOIN sightings on animals.species_id = sightings.id');
     res.send(animals);
   } catch (e) {
     return res.status(400).json({ e });
   }
 });
 
-// create the POST request
+// create the POST request // allow me to add in a new one 
 app.post('/api/animals', cors(), async (req, res) => {
   console.log("working");
   const newAnimal = {

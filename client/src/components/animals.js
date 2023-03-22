@@ -14,6 +14,7 @@ function Animals() {
       .then((response) => response.json())
       .then((animals) => {
             setAnimals(animals);
+            console.log("Animals fetched...", animals); //console.log just for checking
           });
   }, []);
 
@@ -63,7 +64,7 @@ function Animals() {
           } else{
             return (
               <li key={animal.id}>
-           {animal.nickname} <button key={animal.r_c_timestamp} type="button" onClick={() =>{onEdit(animal)}}>EDIT</button>
+          {animal.name} {animal.nickname} {animal.livingage} {animal.sighting_date} {animal.location} <button key={animal.r_c_timestamp} type="button" onClick={() =>{onEdit(animal)}}>EDIT</button>
         </li>
             )
           }
