@@ -34,8 +34,15 @@ app.get('/api/animals', cors(), async (req, res) => {
 });
 
 
-//API call for set species
-
+//S2 API call for set species
+app.get('/api/species', cors(), async (req, res) => {
+  try {
+    const { rows: species } = await db.query('SELECT * FROM species');
+    res.send(species);
+  } catch (e) {
+    return res.status(400).json({ e });
+  }
+});
 
 // create the POST request // allow me to add in a new one 
 app.post('/api/animals', cors(), async (req, res) => {
