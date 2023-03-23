@@ -4,13 +4,16 @@ const Form = (props) => {
   const { initialAnimal = { id: null, nickname: "", r_c_timestamp: "" } } =
     props;
 
-  // This is the oroginal State with not initial student
+  // state for adding Animal Nickname
   const [animal, setAnimal] = useState(initialAnimal);
 
-  // This is the oroginal State with not initial student
+  // state for adding Species Name
   const [species, setSpecies] = useState([]);
 
-  //Step1 modify setAniamls to be setSpecies
+  //state for adding Species Age
+  const [speciesage, setSpeciesAge] = useState([]);
+
+  //Step1 modify setSpecies
   useEffect(() => {
     fetch("http://localhost:8080/api/species") //changing url
       .then((response) => response.json())
