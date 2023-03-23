@@ -4,10 +4,10 @@ const Form = (props) => {
   const { initialAnimal = { id: null, nickname: "", r_c_timestamp: "" } } =
     props;
 
-     // This is the oroginal State with not initial student 
+  // This is the oroginal State with not initial student
   const [animal, setAnimal] = useState(initialAnimal);
 
-    // This is the oroginal State with not initial student
+  // This is the oroginal State with not initial student
   const [species, setSpecies] = useState([]);
 
   //Step1 modify setAniamls to be setSpecies
@@ -23,7 +23,7 @@ const Form = (props) => {
   //function to update the species
   const handleSpeciesChange = (event) => {
     setSpecies(event.target.value);
-  }
+  };
 
   //create functions that handle the event of the user typing into the form
   const handleNickNameChange = (event) => {
@@ -77,8 +77,7 @@ const Form = (props) => {
     }
   };
 
-
-  //S3 have a drop down in here for species 
+  //S3 have a drop down in here for species
 
   return (
     <form onSubmit={handleSubmit}>
@@ -106,7 +105,11 @@ const Form = (props) => {
       {/* Helpful to understand map https://dev.to/antdp425/populate-dropdown-options-in-react-1nk0 */}
       <select onChange={handleSpeciesChange}>
         <option value="Select a Species"></option>
-        {species.map((speciename) => <option name={speciename.name} value={speciename.id}>{speciename.name}</option>)}
+        {species.map((speciename) => (
+          <option name={speciename.name} value={speciename.id}>
+            {speciename.name}
+          </option>
+        ))}
       </select>
     </form>
   );
