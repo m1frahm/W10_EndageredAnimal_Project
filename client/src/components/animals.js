@@ -47,7 +47,7 @@ function Animals() {
     animal.preventDefault(); //
     const editingID = animal.id;
     setEditAnimalId(editingID);
-    //trying adding a prevent default 
+    //trying adding a prevent default
   };
 
   //original return
@@ -82,7 +82,7 @@ function Animals() {
         <table>
           <thead>
             <tr>
-              <td>Edit</td>
+              {/* <td>Edit In Progress</td> */}
               <td>Name</td>
               <td>Age</td>
               <td>Nickname</td>
@@ -94,7 +94,7 @@ function Animals() {
             {animals.map((animal) => {
               return (
                 <tr key={animal.id}>
-                  <td>
+                  {/* <td>
                     {" "}
                     <button
                       key={animal.r_c_timestamp}
@@ -103,9 +103,9 @@ function Animals() {
                         onEdit(animal);
                       }}
                     >
-                      EDIT
+                      UNABLE TO EDIT
                     </button>
-                  </td>
+                  </td> */}
                   <td>{animal.name}</td>
                   <td>{animal.livingage} </td>
                   <td> {animal.nickname} </td>
