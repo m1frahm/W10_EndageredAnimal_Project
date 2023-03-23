@@ -18,8 +18,6 @@ function Animals() {
           });
   }, []);
 
-
-
   const addAnimal = (newAnimal) => {
     //console.log(newAnimal);
     //postStudent(newAnimal);
@@ -54,27 +52,68 @@ function Animals() {
 
   }
 
-  return (
-    <div className="animals">
-      <h2> List of Animals </h2>
-      <ul>
-        {animals.map((animal) => {
-          if(animal.id === editAnimalId){
-            //something needs to happento allow the user edit that existing student
-            // At some point I need to pass the update function as props - connect this to the backend
-            return <Form initialAnimal={animal} saveAnimal={updateAnimal}/>
-          } else{
-            return (
-              <table key={animal.id}>
-          {animal.name} {animal.livingage} {animal.nickname} {animal.location} {animal.sighting_date}  <button key={animal.r_c_timestamp} type="button" onClick={() =>{onEdit(animal)}}>EDIT</button>
-        </table>
-            )
-          }
-        })}
-      </ul>
-      <Form saveAnimal={addAnimal} />
-    </div>
-  );
+  //original return
+//   return (
+//     <div className="animals">
+//       <h2> List of Animals </h2>
+//       <br></br>
+//         {animals.map((animal) => {
+//           if(animal.id === editAnimalId){
+//             //something needs to happento allow the user edit that existing student
+//             // At some point I need to pass the update function as props - connect this to the backend
+//             return <Form initialAnimal={animal} saveAnimal={updateAnimal}/>
+//           } else{
+//             return (
+//               <table key={animal.id}>
+//           {animal.name} {animal.livingage} {animal.nickname} {animal.location} {animal.sighting_date}  <button key={animal.r_c_timestamp} type="button" onClick={() =>{onEdit(animal)}}>EDIT</button>
+//         </table>
+//             )
+//           }
+//         })}
+      
+//       <Form saveAnimal={addAnimal} />
+//     </div>
+//   );
+// }
+
+return (
+  <div className="animals">
+    <h2> List of Animals </h2>
+    <br></br>
+      {animals.map((animal) => {
+        if(animal.id === editAnimalId){
+          //something needs to happento allow the user edit that existing student
+          // At some point I need to pass the update function as props - connect this to the backend
+          return <Form initialAnimal={animal} saveAnimal={updateAnimal}/>
+        } else{
+          return (
+            <button key={animal.r_c_timestamp} type="button" onClick={() =>{onEdit(animal)}}>EDIT</button>
+            <table>
+            <thead>
+              <tr>
+                <td>Name</td>
+                <td>Age</td>
+                <td>Nickname</td>
+                <td>Sighting Date</td>
+              </tr>
+            </thead> 
+            <tbody
+             {animals.map((animal) => {
+             return <tr key={animal.id}>
+        <td>{animal.name}</td>
+        <td>{animal.livingage} </td> 
+        <td> {animal.nickname} </td> 
+        <td>{animal.location} </td> 
+        <td>{animal.sighting_date}</td>  
+        </tr>
+          
+      })}
+     </tbody>
+     </table>
+    
+    <Form saveAnimal={addAnimal} />
+  </div>
+);
 }
 
 export default Animals;
