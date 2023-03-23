@@ -22,7 +22,7 @@ const Form = (props) => {
 
   //function to update the species
   const handleSpeciesChange = (event) => {
-    setSpecies(event.target.value);
+    let speciesChosen = event.target.value;
   };
 
   //create functions that handle the event of the user typing into the form
@@ -106,7 +106,11 @@ const Form = (props) => {
       <select onChange={handleSpeciesChange}>
         <option value="Select a Species"></option>
         {species.map((speciename) => (
-          <option name={speciename.name} value={speciename.id}>
+          <option
+            key={speciename.id}
+            name={speciename.name}
+            value={speciename.id}
+          >
             {speciename.name}
           </option>
         ))}
