@@ -102,8 +102,8 @@ const Form = (props) => {
           onChange={handleRCTimestampChange}
         />
       </fieldset>
-      <button type="submit">{!animal.id ? "ADD" : "SAVE"}</button>
-
+      <button type="submit">{!animal.id ? "Add Species Name" : "SAVE"}</button>
+      {/* Helpful to understand map https://dev.to/antdp425/populate-dropdown-options-in-react-1nk0 */}
       <select onChange={handleSpeciesChange}>
         <option value="Select a Species"></option>
         {species.map((speciename) => <option name={speciename.name} value={speciename.id}>{speciename.name}</option>)}
