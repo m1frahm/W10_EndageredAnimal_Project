@@ -1,91 +1,123 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Form = (props) => {
+  const { initialAnimal = { id: null, nickname: "", r_c_timestamp: "" } } =
+    props;
 
-  const {initialStudent = {id: null, 
-                          firstname: "", 
-                        lastname: ""}} = props;
+  // state for adding Animal Nickname
+  const [animal, setAnimal] = useState(initialAnimal);
 
+  // state for adding Species Name
+  const [species, setSpecies] = useState([]);
 
-  // This is the oroginal State with not initial student 
-  const [student, setStudent] = useState(initialStudent);
+  //state for adding Species Age
+  const [speciesage, setSpeciesAge] = useState([]);
 
-  //create functions that handle the event of the user typing into the form
-  const handleNameChange = (event) => {
-    const firstname = event.target.value;
-    setStudent((student) => ({ ...student, firstname }));
+  //Step1 modify setSpecies
+  useEffect(() => {
+    fetch("http://localhost:8080/api/species") //changing url
+      .then((response) => response.json())
+      .then((speciesdata) => {
+        setSpecies(speciesdata);
+        console.log("Species fetched...", speciesdata); //console.log just for checking
+      });
+  }, []);
+
+  //function to update the species
+  const handleSpeciesChange = (event) => {
+    let speciesChosen = event.target.value;
   };
 
-  const handleLastnameChange = (event) => {
-    const lastname = event.target.value;
-    setStudent((student) => ({ ...student, lastname }));
+  //create functions that handle the event of the user typing into the form
+  const handleNickNameChange = (event) => {
+    const nickname = event.target.value;
+    setAnimal((animal) => ({ ...animal, nickname }));
+  };
+
+  const handleRCTimestampChange = (event) => {
+    const r_c_timestamp = event.target.value;
+    setAnimal((animal) => ({ ...animal, r_c_timestamp }));
   };
 
   //A function to handle the post request
-  const postStudent = (newStudent) => {
-    return fetch("http://localhost:8080/api/students", {
+  const postAnimal = (newAnimal) => {
+    return fetch("http://localhost:8080/api/animals", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newStudent),
+      body: JSON.stringify(newAnimal),
     })
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         console.log("From the post ", data);
-        props.saveStudent(data);
+        props.saveAnimal(data);
       });
   };
 
-    //A function to handle the Update request
-    const updateStudent = (existingStudent) =>{
-      return fetch(`http://localhost:8080/api/students/${existingStudent.id}`, {
-          method: 'PUT',
-          headers: {'Content-Type': 'application/json'}, 
-          body: JSON.stringify(existingStudent)
-        }).then((response) => {
-            return response.json()
-        }).then((data) => {
-          console.log("From put request ", data);
-          props.saveStudent(data);
+  //A function to handle the Update request
+  const updateAnimal = (existingAnimal) => {
+    return fetch(`http://localhost:8080/api/animals/${existingAnimal.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(existingAnimal),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("From put request ", data);
+        props.saveAnimal(data);
       });
-
-  }
-
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(student.id){
-      updateStudent(student);
-    } else{
-      postStudent(student);
+    if (animal.id) {
+      updateAnimal(animal);
+    } else {
+      postAnimal(animal);
     }
-    
   };
+
+  //S3 have a drop down in here for species
 
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
-        <label>First Name</label>
+        <label>Animal Nickname</label>
         <input
           type="text"
-          id="add-user-name"
-          placeholder="First Name"
+          id="add-animal-nickname"
+          placeholder="Animal Nickname"
           required
-          value={student.firstname}
-          onChange={handleNameChange}
+          value={animal.nickname}
+          onChange={handleNickNameChange}
         />
-        <label>Last Name</label>
+        <label>R_C_Timestamp</label>
         <input
-          type="text"
-          id="add-user-lastname"
-          placeholder="Last Name"
+          type="date"
+          id="add-record-timestamp"
+          placeholder="Timestamp"
           required
-          value={student.lastname}
-          onChange={handleLastnameChange}
+          value={animal.r_c_timestamp}
+          onChange={handleRCTimestampChange}
         />
       </fieldset>
-      <button type="submit">{!student.id ? "ADD": "SAVE"}</button>
+      <button type="submit">{!animal.id ? "Add Species Name" : "SAVE"}</button>
+      {/* Helpful to understand map https://dev.to/antdp425/populate-dropdown-options-in-react-1nk0 */}
+      <select onChange={handleSpeciesChange}>
+        <option value="Select a Species"></option>
+        {species.map((speciename) => (
+          <option
+            key={speciename.id}
+            name={speciename.name}
+            value={speciename.id}
+          >
+            {speciename.name}
+          </option>
+        ))}
+      </select>
     </form>
   );
 };
